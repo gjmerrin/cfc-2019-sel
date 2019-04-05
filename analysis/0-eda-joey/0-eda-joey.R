@@ -36,9 +36,25 @@ ds0 <- dt0
 ds0 %>% glimpse(60)
 
 # ---- tweak-data --------------------------------------------------------------
+ds0 <- ds0 %>% 
+  dplyr::mutate(
+    school_id = as.character(SchoolID)
+  ) %>% 
+  dplyr::filter(!SchoolID == "Mark Twain Elementary in WA_duplicated_140") %>% 
+  dplyr::mutate(
+    school_id = ifelse(school_id == "Benson Hill Elementary in WA'",
+                       "Benson Hill Elementary in WA", school_id)
+  )
 
+regex = '(.+)( in )([A-Z]{2})( ?)'
+ds0 <- ds0 %>% 
+  dplyr::mutate(
+    school_id     = gsub(" Elementary ", " ", school_id)
+    ,school_name  = gsub(regex, "\\1", school_id)
+    ,school_state = gsub(regex, "\\3", school_id)
+  )
 
-
+unique(ds0$SchoolID)
 # ---- basic-table --------------------------------------------------------------
 
 t1 <- ds0 %>% 
@@ -51,7 +67,30 @@ t1 %>% neat()
 
 
 # ---- basic-graph --------------------------------------------------------------
+# How many students in each school
+d1 <- ds0 %>% 
+  dplyr::group_by(SchoolID) %>% 
+  dplyr::summarize(
+    n_students = length(unique(StudentID))
+  ) 
 
+d1 %>% 
+  TabularManifest::histogram_continuous("n_students")
+# ---- facet-graph ------------------------------------------------
+
+# scores of a measure in each school
+g2 <- ds0 %>% 
+  ggplot2::ggplot(
+    aes(
+     x = SDQpro1
+     ,fill = school_state
+   )
+ ) +
+  geom_bar() +
+  facet_wrap("school_name")
+  theme_minimal()
+g2
+  
 
 
 # ---- publish ---------------------------------------
