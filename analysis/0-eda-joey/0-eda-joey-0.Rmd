@@ -2,6 +2,7 @@
 title: "EDA-0"
 output:
   html_document:
+    css: ~/Documents/GitHub/cfc/cfc-2019-sel/libs/css/sidebar.css
     keep_md: yes
     toc: yes
 ---
@@ -89,6 +90,8 @@ read_chunk("./analysis/0-eda-joey/0-eda-joey.R")
 ```{r basic-graph, echo=TRUE, results='show', message=FALSE}
 ```
 
+```{r facet-graph, echo=TRUE, results='show', message=FALSE, fig.width=9, fig.height=6, out.width=900}
+```
 
 
 
