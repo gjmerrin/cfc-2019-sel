@@ -90,6 +90,10 @@ g2 <- ds0 %>%
 g2
   
 
+# ---- mapping-treatment-1 ---------------------
+
+# create a graph that maps treatment levels onto graph dimension
+# how do I start? 
 
 
 # ---- publish ---------------------------------------
