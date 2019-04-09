@@ -74,8 +74,8 @@ d1 <- ds0 %>%
 
 d1 %>% 
   TabularManifest::histogram_continuous("n_students")
-# ---- facet-graph ------------------------------------------------
-# scores of a measure in each school
+# ---- bar-graph ------------------------------------------------
+# Scores of a measure in each school
 g2 <- ds0 %>% 
   ggplot2::ggplot(
     aes(
@@ -102,7 +102,7 @@ g3 <- ds0 %>%
 g3
 
 # ---- box-plot-graph ------------------------------------------------
-
+# box plot of a variable and the treatment variable
 g4 <- ds0 %>% 
   ggplot2::ggplot(
     aes(
@@ -113,6 +113,8 @@ g4 <- ds0 %>%
   geom_boxplot() +
   theme_minimal()
 g4
+
+
 
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
