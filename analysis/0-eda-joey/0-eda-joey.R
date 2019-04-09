@@ -114,6 +114,21 @@ g4 <- ds0 %>%
   theme_minimal()
 g4
 
+# ---- new-graph ------------------------------------------------
+
+g5 <- ds0 %>% 
+  ggplot2::ggplot(
+    mapping = aes(
+      x = SDQpro1
+    )
+  ) +
+   geom_freqpoly(
+     mapping = aes(
+       color = Tx1
+     ) , bindwidth = 500
+   )
+g5
+
 
 
 # ---- publish ---------------------------------------
