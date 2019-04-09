@@ -106,16 +106,19 @@ g3
 g4 <- ds0 %>% 
   ggplot2::ggplot(
     aes(
-      x  = Tx1
-      ,y = SDQpro1
+      x     = Tx1
+      ,y    = SDQpro1
+      ,fill = Tx1
     )
   ) + 
   geom_boxplot() +
-  theme_minimal()
+  coord_flip() +
+  theme_minimal() 
 g4
 
-# ---- new-graph ------------------------------------------------
 
+# ---- new-graph ------------------------------------------------
+# Freqpoly
 g5 <- ds0 %>% 
   ggplot2::ggplot(
     mapping = aes(
@@ -125,12 +128,35 @@ g5 <- ds0 %>%
    geom_freqpoly(
      mapping = aes(
        color = Tx1
-     ) , bindwidth = 500
-   )
+     ) , bindwidth = 100
+   ) +
+  theme_minimal()
 g5
 
+g6 <- ds0 %>% 
+  ggplot2::ggplot(
+    mapping = aes(
+      x  = SDQpro1
+      ,y = SDQpro2
+    )
+  ) +
+  ggplot2::geom_point()+
+  ggplot2::geom_smooth()+
+  ggplot2::geom_jitter()+
+  theme_minimal()
+g6
 
-
+g7 <- ds0 %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_smooth(
+    mapping = aes(
+      x  = SDQpro1
+      ,y = SDQpro2
+      ,color = Tx1
+    )
+  ) + 
+theme_minimal()
+g7
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
 path_report_2 <- "./reports/*/report_2.Rmd"
