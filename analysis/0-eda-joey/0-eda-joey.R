@@ -77,6 +77,7 @@ d1 <- ds0 %>%
 d1 %>% 
   TabularManifest::histogram_continuous("n_students")
 # ---- facet-graph ------------------------------------------------
+# ---- facet-graph ------------------------------------------------
 
 # scores of a measure in each school
 g2 <- ds0 %>% 
@@ -91,6 +92,7 @@ g2 <- ds0 %>%
   theme_minimal()
 g2
   
+# ---- new-graph ------------------------------------------------
 
 
 # ---- publish ---------------------------------------
