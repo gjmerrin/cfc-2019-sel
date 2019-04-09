@@ -87,12 +87,16 @@ read_chunk("./analysis/0-eda-joey/0-eda-joey.R")
 
 ##Graphs
 <!-- Basic graph view.   -->
+
+###Basic
 ```{r basic-graph, echo=TRUE, results='show', message=FALSE}
 ```
 
+####Bar
 ```{r facet-graph, echo=TRUE, results='show', message=FALSE, fig.width=9, fig.height=6, out.width=900}
 ```
 
+###Density
 ```{r density-graph, echo=TRUE, results='show', message=FALSE, fig.width=9, fig.height=6, out.width=900}
 ```
 

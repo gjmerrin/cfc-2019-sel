@@ -64,8 +64,6 @@ t1 <- ds0 %>%
   )
 t1 %>% neat()
 
-
-
 # ---- basic-graph --------------------------------------------------------------
 # How many students in each school
 d1 <- ds0 %>% 
@@ -77,8 +75,6 @@ d1 <- ds0 %>%
 d1 %>% 
   TabularManifest::histogram_continuous("n_students")
 # ---- facet-graph ------------------------------------------------
-# ---- facet-graph ------------------------------------------------
-
 # scores of a measure in each school
 g2 <- ds0 %>% 
   ggplot2::ggplot(
@@ -88,12 +84,11 @@ g2 <- ds0 %>%
    )
  ) +
   geom_bar() +
-  facet_wrap("school_name")
+  facet_wrap("school_name") +
   theme_minimal()
 g2
-  
 # ---- density-graph ------------------------------------------------
-
+# denisty of a measure in across schools
 g3 <- ds0 %>% 
   ggplot2::ggplot(
     aes(
@@ -102,9 +97,22 @@ g3 <- ds0 %>%
     )
   ) +
   geom_density() +
-  facet_wrap("school_name")
+  facet_wrap("school_name") +
   theme_minimal()
 g3
+
+# ---- box-plot-graph ------------------------------------------------
+
+g4 <- ds0 %>% 
+  ggplot2::ggplot(
+    aes(
+      x  = Tx1
+      ,y = SDQpro1
+    )
+  ) + 
+  geom_boxplot() +
+  theme_minimal()
+g4
 
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
