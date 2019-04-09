@@ -92,8 +92,19 @@ g2 <- ds0 %>%
   theme_minimal()
 g2
   
-# ---- new-graph ------------------------------------------------
+# ---- density-graph ------------------------------------------------
 
+g3 <- ds0 %>% 
+  ggplot2::ggplot(
+    aes(
+      x = SDQpro1
+      ,fill = school_state
+    )
+  ) +
+  geom_density() +
+  facet_wrap("school_name")
+  theme_minimal()
+g3
 
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
