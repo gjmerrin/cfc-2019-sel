@@ -105,7 +105,7 @@ read_chunk("./analysis/0-eda-joey/0-eda-joey.R")
 ```
 
 ###Poly
-```{r poly-graph, echo=TRUE, results='show', message=FALSE, fig.width=9, fig.height=6, out.width=900}
+```{r poly-graph, echo=TRUE, results='show', message=FALSE, fig.width=14, fig.height=10, out.width=1100}
 ```
 
 ###Point
