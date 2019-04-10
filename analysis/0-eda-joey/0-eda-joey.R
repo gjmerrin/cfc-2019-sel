@@ -200,8 +200,7 @@ ggplot2::ggplot(
     ,group = StudentID
     ,color = Tx1
   )
-) + 
-  theme_minimal
+) 
 
 p + geom_point() + geom_jitter()
 p + geom_line() 
@@ -209,7 +208,6 @@ p + geom_line() + facet_grid(. ~ Tx1)
 p + geom_line() + facet_wrap(~school_name)
 
 # ---- school-graph ------------------------------------------------
-
 d9_long_2 <- d9_long %>% 
   group_by(school_name, wave) %>% 
   mutate(
@@ -226,10 +224,11 @@ s <- d9_long_2 %>%
       ,group = school_name
       ,color = school_state
     ) 
-  ) +
-  theme_minimal()
+  )
 
+s + geom_point()
 s + geom_line() 
+s + geom_line() + facet_wrap(~school_name)
 
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
