@@ -176,6 +176,49 @@ g8 <- ds0 %>%
 g8
 
 # ---- by-wave-graph ------------------------------------------------
+vars <- c("StudentID","school_name", "school_state", "Tx1")
+d9_long <- ds0 %>% 
+  dplyr::select_(.dots = c(vars, paste0("SDQpro",1:4))) %>%
+  tidyr::gather(
+    key    = "key"   # name of new variable to store the key
+    ,value = "value" # name of new variable to store the values
+    ,SDQpro1, SDQpro2, SDQpro3, SDQpro4 # selection of columns to gather
+  ) %>% 
+  dplyr::arrange(StudentID) %>% 
+  dplyr::mutate(
+    SDQ  = value, # the variable that will store the value of SDQ
+    wave = gsub(pattern = "SDQpro(\\d+)",replacement = "\\1", x = key)
+  ) %>% 
+  dplyr::select(-key, -value) %>% 
+  dplyr::arrange(StudentID)
+d9_long %>% print()
+
+g9 <- d9_long %>%
+  ggplot2::ggplot() +
+  ggplot2::geom_smooth(
+    mapping = aes(
+      x  = wave
+      ,y = SDQ
+      ,color = Tx1
+    )
+  ) + 
+  theme_minimal()
+g9
+
+p <- d9_long %>%
+ggplot2::ggplot(
+  mapping = aes(
+    x      = wave
+    ,y     = SDQ
+    ,group = StudentID
+    ,color = Tx1
+  )
+) 
+
+p + geom_point() 
+p + geom_line()
+p + geom_line() + facet_grid(. ~ Tx1)
+p + geom_line() + facet_wrap(~school_name)
 
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
