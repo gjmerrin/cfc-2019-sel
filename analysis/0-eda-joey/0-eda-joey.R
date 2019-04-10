@@ -66,13 +66,13 @@ t1 %>% neat()
 
 # ---- basic-graph --------------------------------------------------------------
 # How many students in each school
-d1 <- ds0 %>% 
+g1 <- ds0 %>% 
   dplyr::group_by(SchoolID) %>% 
   dplyr::summarize(
     n_students = length(unique(StudentID))
   ) 
 
-d1 %>% 
+g1 %>% 
   TabularManifest::histogram_continuous("n_students")
 # ---- bar-graph ------------------------------------------------
 # Scores of a measure in each school
@@ -148,6 +148,23 @@ g6 <- ds0 %>%
   theme_minimal()
 g6
 
+g6_2 <- ds0 %>% 
+  subset(!is.na(Tx1)) %>% 
+  ggplot2::ggplot(
+    aes(
+      x  = school_name
+      ,y = SDQpro1
+    )
+   ) +
+  geom_point(
+    alpha     = 0.3
+    ,color    = "tomato"
+    ,position = "jitter") +
+  geom_boxplot(alpha=0) + 
+  coord_flip() + 
+  facet_grid(. ~ Tx1) +
+  theme_minimal()
+g6_2
 # ---- line-graph ------------------------------------------------
 
 g7 <- ds0 %>% 
@@ -226,9 +243,38 @@ s <- d9_long_2 %>%
     ) 
   )
 
-s + geom_point()
-s + geom_line() 
-s + geom_line() + facet_wrap(~school_name)
+s + ggplot2::geom_point(
+  #shape  = 19  # Use solid circles
+  shape  = 1   # Use hollow circles
+  ,alpha = 1/4 # 1/4 opacity
+) + 
+  ggplot2::geom_jitter()
+
+s + ggplot2::geom_line() 
+s + ggplot2::geom_line() + facet_wrap(~school_name)
+# similar to the geom_line above
+# s +
+#   ggplot2::geom_smooth() +
+#   facet_wrap("school_name") +
+#   theme_minimal()
+
+g15 <- d9_long %>% 
+  group_by(school_name, wave) %>% 
+  mutate(
+    sm_prosocial = mean(x = prosocial, na.rm = TRUE)
+  ) %>% 
+  subset(!is.na(Tx1)) %>% 
+  ggplot2::ggplot(
+    aes(
+     x = sm_prosocial
+    ,fill = Tx1
+    )
+  ) +
+  geom_density() +
+  facet_wrap("wave") +
+  theme_minimal()
+g15
+
 
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
