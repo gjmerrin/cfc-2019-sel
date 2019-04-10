@@ -157,6 +157,19 @@ g7 <- ds0 %>%
   ) + 
 theme_minimal()
 g7
+
+g8 <- ds0 %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_smooth(
+    mapping = aes(
+      x  = SDQpro1
+      ,y = SDQpro2
+      ,color = Tx1
+    )
+  ) + 
+  facet_wrap("school_name") +
+  theme_minimal()
+g8
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
 path_report_2 <- "./reports/*/report_2.Rmd"
