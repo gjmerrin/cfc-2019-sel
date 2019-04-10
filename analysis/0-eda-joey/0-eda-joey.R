@@ -117,7 +117,7 @@ g4 <- ds0 %>%
 g4
 
 
-# ---- new-graph ------------------------------------------------
+# ---- poly-graph ------------------------------------------------
 # Freqpoly
 g5 <- ds0 %>% 
   ggplot2::ggplot(
@@ -133,6 +133,8 @@ g5 <- ds0 %>%
   theme_minimal()
 g5
 
+# ---- point-graph ------------------------------------------------
+
 g6 <- ds0 %>% 
   ggplot2::ggplot(
     mapping = aes(
@@ -145,6 +147,8 @@ g6 <- ds0 %>%
   ggplot2::geom_jitter()+
   theme_minimal()
 g6
+
+# ---- line-graph ------------------------------------------------
 
 g7 <- ds0 %>% 
   ggplot2::ggplot() +
@@ -170,6 +174,9 @@ g8 <- ds0 %>%
   facet_wrap("school_name") +
   theme_minimal()
 g8
+
+# ---- by-wave-graph ------------------------------------------------
+
 # ---- publish ---------------------------------------
 path_report_1 <- "./analysis/0-eda-joey/0-eda-joey-0.Rmd"
 path_report_2 <- "./reports/*/report_2.Rmd"
