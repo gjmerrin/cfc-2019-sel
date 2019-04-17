@@ -55,23 +55,58 @@ d_meta
 # ---- tweak-data ----------------------------
 ds0 <- ds0 %>% 
   dplyr::mutate(
-    school_id = as.character(SchoolID)
+    SchoolID = as.character(SchoolID)
   ) %>% 
   dplyr::filter(!SchoolID == "Mark Twain Elementary in WA_duplicated_140") %>% 
   dplyr::mutate(
-    school_id = ifelse(school_id == "Benson Hill Elementary in WA'",
-                       "Benson Hill Elementary in WA", school_id)
+    SchoolID = ifelse(SchoolID == "Cascade Elementary in WA ",
+                       "Cascade Elementary in WA", SchoolID)
+    ,SchoolID = ifelse(SchoolID == "Benson Hill Elementary in WA'",
+                      "Benson Hill Elementary in WA", SchoolID)
   )
 
 regex = '(.+)( in )([A-Z]{2})( ?)'
 ds0 <- ds0 %>% 
   dplyr::mutate(
-    school_id     = gsub(" Elementary ", " ", school_id)
-    ,school_name  = gsub(regex, "\\1", school_id)
-    ,school_state = gsub(regex, "\\3", school_id)
+    school_id     = gsub(" Elementary ", " ", SchoolID)
+    ,school_name  = gsub(regex, "\\1", SchoolID)
+    ,school_state = gsub(regex, "\\3", SchoolID)
   )
 
-unique(ds0$SchoolID)
+unique(ds0$school_id)
+
+# function to compute the typical value in a character vector
+getmode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+# creating a correct treatment (tx) variable
+ds0 <- ds0 %>% 
+  dplyr::mutate(
+    Tx1 = as.character(Tx1)
+  ) %>% 
+  dplyr::group_by(school_id) %>% 
+  dplyr::mutate(
+    tx = getmode(Tx1)
+  ) %>% 
+  dplyr::ungroup()
+
+# sanity check: each school should have only one level of Tx
+ds0 %>% 
+  dplyr::group_by(school_id) %>% 
+  dplyr::summarize(
+    n_levels_tx = length(unique(tx))
+  ) %>%
+  print(n = nrow(.))
+
+# what is the level of tx for each of the school?
+ds0 %>% 
+  dplyr::group_by(school_id, tx) %>% 
+  dplyr::count() %>% 
+  dplyr::arrange(tx) %>% 
+  print(n = nrow(.))
+
 
 
 # define the relevant scope of vision needed for analytic goals
@@ -83,7 +118,8 @@ variables_included <- d_meta %>%
 variables_included %>% str()
 
 ds1 <- ds0 %>% 
-  dplyr::select_(.dots = c(variables_included)) %>% 
+  dplyr::select_(.dots = c(variables_included,"school_id","school_name","school_state", "tx")) %>%
+  # dplyr::select_(.dots = c(variables_included)) %>% 
   dplyr::arrange(StudentID)
   
 
@@ -103,7 +139,7 @@ ds1_long <- ds1 %>%
   dplyr::left_join(d_meta, by = c("key" = "name")) %>% 
   dplyr::select(-include)
 
-# ---- define-utility-functions ---------------
+# ---- sanity-check ---------------
 
 
 # ---- save-to-disk ----------------------------
