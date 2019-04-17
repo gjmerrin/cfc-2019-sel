@@ -11,6 +11,7 @@ source("./scripts/graphing/graph-presets.R") # fonts, colors, themes
 # ---- load-packages -----------------------------------------------------------
 # Attach these packages so their functions don't need to be qualified: http://r-pkgs.had.co.nz/namespace.html#search-path
 library(magrittr) # enables piping : %>% 
+library(ggplot2)
 # library("msm") # multistate modeling (cannot be declared silently)
 # # Verify these packages are available on the machine, but their functions need to be qualified: http://r-pkgs.had.co.nz/namespace.html#search-path
 requireNamespace("ggplot2") # graphing
@@ -37,6 +38,66 @@ ds0 %>% glimpse(60)
 
 # ---- tweak-data --------------------------------------------------------------
 
+ds0 %>% 
+  dplyr::group_by(school_id, tx) %>% 
+  dplyr::count() %>% 
+  dplyr::arrange(tx) %>% 
+  print(n = nrow(.))
+
+
+d1 <- ds0 %>% 
+  dplyr::select(StudentID, school_id, wave, construct, value, tx) %>% 
+  dplyr::mutate(
+    value = as.numeric(value)
+  )
+
+
+
+
+get_a_sample <- function(d,varname,sample_size, show_all = FALSE){
+  # varname = "offense_arrest_cd"
+  
+  sample_pool <- d %>% 
+    dplyr::distinct_(.dots = varname) %>% na.omit() %>% 
+    as.list() %>% unlist() %>% as.vector() 
+  if(show_all){ sample_size = length(sample_pool)}
+  selected_sample <- sample_pool %>% sample(size = sample_size, replace = FALSE )
+  
+  return(selected_sample)
+} 
+# d_sample_1 <- d1 %>% get_a_sample(varname = "StudentID",sample_size =  100)
+
+
+set.seed(42)
+alpha_value <- .05
+sample_size <- 1000
+g1 <- d1 %>% 
+  # dplyr::filter(construct %in% c("Empathy")) %>%
+  dplyr::filter(construct %in% c("Reading Fluency")) %>%
+  # dplyr::filter(construct %in% c("Empathy", "Reading Fluency")) %>%
+  dplyr::filter(StudentID %in% get_a_sample(d1,"StudentID",sample_size, F)) %>% 
+  ggplot(aes(x = wave, y = value)) +
+  # geom_point( shape  = 21, size = 3, fill = NA, alpha = alpha_value)+
+  geom_line(aes(group = StudentID), alpha = alpha_value, color = "black")+
+  geom_smooth(aes(group = school_id, color = tx), se = F)+
+  # geom_smooth(aes(group = SchoolID), color = "blue", se = F)+
+  # geom_smooth(aes(group = as.factor(tx)) )+
+  main_theme 
+
+g1
+
+g2 <- d1 %>% 
+  dplyr::filter(construct %in% c("Reading Fluency")) %>%
+  dplyr::filter(StudentID %in% get_a_sample(d1,"StudentID",sample_size, F)) %>%
+  ggplot(aes(x = wave, y = value))+
+  geom_smooth(aes(group = tx))+
+  main_theme
+g2
+  
+  
+  
+  
+  
 # ---- basic-table --------------------------------------------------------------
 
 
