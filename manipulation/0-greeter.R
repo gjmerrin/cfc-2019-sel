@@ -42,6 +42,7 @@ ds0 <- foreign::read.spss(path_input,use.value.labels = T,use.missings = TRUE) %
 #   ,label = variable_labels
 # )
 # live_meta %>% readr::write_csv("./data-unshared/derived/live-meta.csv")
+# this live_meta object would be manually edited in Excel to create dead_meta
 
 # ---- input-augmented-meta -------------------
 # input the dead meta data
