@@ -47,8 +47,12 @@ ds0 <- foreign::read.spss(path_input,use.value.labels = T,use.missings = TRUE) %
 # input the dead meta data
 d_meta <- readr::read_csv("./data-unshared/raw/dead-meta.csv")
 
+# ---- inspect-data ---------------------------
+# ds0 %>% dplyr::glimpse(80) # 365 columns, 9076 rows
+d_meta
 
 # ---- tweak-data ----------------------------
+# define the relevant scope of vision needed for analytic goals
 variables_included <- d_meta %>% 
   dplyr::filter( include == TRUE) %>% 
   dplyr::select(name) %>% 
@@ -57,12 +61,23 @@ variables_included <- d_meta %>%
 variables_included %>% str()
 
 ds1 <- ds0 %>% 
-  dplyr::select_(.dots = c(variables_included))
+  dplyr::select_(.dots = c(variables_included)) %>% 
+  dplyr::arrange(StudentID)
+  
 
 ds1 %>% dplyr::glimpse(60)
-# 
 
+# prepare for gathering
+have_waves <- d_meta %>% 
+  dplyr::filter(!is.na(wave)) %>% 
+  dplyr::filter(name %in% variables_included) %>% 
+  dplyr::select(name) %>% 
+  as.list() %>% unlist() %>% as.character()
 
+ds1_long <- ds1 %>%
+  dplyr::arrange(StudentID) %>% dplyr::slice(1:100) %>% 
+  tidyr::gather("key", "value", have_waves) %>% 
+  dplyr::left_join(d_meta, by = c("key" = "name"))
 
 # ---- define-utility-functions ---------------
 
