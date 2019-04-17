@@ -188,9 +188,9 @@ unique(ds0$SchoolID)
 ```
 
 
-#Exploration
+# Exploration
 
-##Tables
+## Tables
 <!-- Basic table view.   -->
 
 ```r
@@ -453,26 +453,29 @@ t1 %>% neat()
 </tbody>
 </table>
 
-##Graphs
+## Graphs
 <!-- Basic graph view.   -->
+
+### Basic
 
 ```r
 # How many students in each school
-d1 <- ds0 %>% 
+g1 <- ds0 %>% 
   dplyr::group_by(SchoolID) %>% 
   dplyr::summarize(
     n_students = length(unique(StudentID))
   ) 
 
-d1 %>% 
+g1 %>% 
   TabularManifest::histogram_continuous("n_students")
 ```
 
 <img src="figure_rmd_0/basic-graph-1.png" width="550px" />
 
+### Bar
 
 ```r
-# scores of a measure in each school
+# Scores of a measure in each school
 g2 <- ds0 %>% 
   ggplot2::ggplot(
     aes(
@@ -481,375 +484,8 @@ g2 <- ds0 %>%
    )
  ) +
   geom_bar() +
-  facet_wrap("school_name")
+  facet_wrap("school_name") +
   theme_minimal()
-```
-
-```
-List of 59
- $ line                 :List of 6
-  ..$ colour       : chr "black"
-  ..$ size         : num 0.5
-  ..$ linetype     : num 1
-  ..$ lineend      : chr "butt"
-  ..$ arrow        : logi FALSE
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_line" "element"
- $ rect                 :List of 5
-  ..$ fill         : chr "white"
-  ..$ colour       : chr "black"
-  ..$ size         : num 0.5
-  ..$ linetype     : num 1
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_rect" "element"
- $ text                 :List of 11
-  ..$ family       : chr ""
-  ..$ face         : chr "plain"
-  ..$ colour       : chr "black"
-  ..$ size         : num 11
-  ..$ hjust        : num 0.5
-  ..$ vjust        : num 0.5
-  ..$ angle        : num 0
-  ..$ lineheight   : num 0.9
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 0pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : logi FALSE
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.title.x         :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : num 1
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 2.75pt 0pt 0pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.title.x.top     :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : num 0
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 2.75pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.title.y         :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : num 1
-  ..$ angle        : num 90
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 2.75pt 0pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.title.y.right   :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : num 0
-  ..$ angle        : num -90
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 0pt 2.75pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.text            :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : chr "grey30"
-  ..$ size         : 'rel' num 0.8
-  ..$ hjust        : NULL
-  ..$ vjust        : NULL
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : NULL
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.text.x          :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : num 1
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 2.2pt 0pt 0pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.text.x.top      :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : num 0
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 2.2pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.text.y          :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : num 1
-  ..$ vjust        : NULL
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 2.2pt 0pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.text.y.right    :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : num 0
-  ..$ vjust        : NULL
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 0pt 2.2pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ axis.ticks           : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ axis.ticks.length    : 'unit' num 2.75pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ axis.line            : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ axis.line.x          : NULL
- $ axis.line.y          : NULL
- $ legend.background    : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ legend.margin        : 'margin' num [1:4] 5.5pt 5.5pt 5.5pt 5.5pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ legend.spacing       : 'unit' num 11pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ legend.spacing.x     : NULL
- $ legend.spacing.y     : NULL
- $ legend.key           : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ legend.key.size      : 'unit' num 1.2lines
-  ..- attr(*, "valid.unit")= int 3
-  ..- attr(*, "unit")= chr "lines"
- $ legend.key.height    : NULL
- $ legend.key.width     : NULL
- $ legend.text          :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : 'rel' num 0.8
-  ..$ hjust        : NULL
-  ..$ vjust        : NULL
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : NULL
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ legend.text.align    : NULL
- $ legend.title         :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : num 0
-  ..$ vjust        : NULL
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : NULL
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ legend.title.align   : NULL
- $ legend.position      : chr "right"
- $ legend.direction     : NULL
- $ legend.justification : chr "center"
- $ legend.box           : NULL
- $ legend.box.margin    : 'margin' num [1:4] 0cm 0cm 0cm 0cm
-  ..- attr(*, "valid.unit")= int 1
-  ..- attr(*, "unit")= chr "cm"
- $ legend.box.background: list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ legend.box.spacing   : 'unit' num 11pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ panel.background     : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ panel.border         : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ panel.spacing        : 'unit' num 5.5pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ panel.spacing.x      : NULL
- $ panel.spacing.y      : NULL
- $ panel.grid           :List of 6
-  ..$ colour       : chr "grey92"
-  ..$ size         : NULL
-  ..$ linetype     : NULL
-  ..$ lineend      : NULL
-  ..$ arrow        : logi FALSE
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_line" "element"
- $ panel.grid.minor     :List of 6
-  ..$ colour       : NULL
-  ..$ size         : 'rel' num 0.5
-  ..$ linetype     : NULL
-  ..$ lineend      : NULL
-  ..$ arrow        : logi FALSE
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_line" "element"
- $ panel.ontop          : logi FALSE
- $ plot.background      : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ plot.title           :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : 'rel' num 1.2
-  ..$ hjust        : num 0
-  ..$ vjust        : num 1
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 5.5pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ plot.subtitle        :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : num 0
-  ..$ vjust        : num 1
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 0pt 0pt 5.5pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ plot.caption         :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : 'rel' num 0.8
-  ..$ hjust        : num 1
-  ..$ vjust        : num 1
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 5.5pt 0pt 0pt 0pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ plot.tag             :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : 'rel' num 1.2
-  ..$ hjust        : num 0.5
-  ..$ vjust        : num 0.5
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : NULL
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ plot.tag.position    : chr "topleft"
- $ plot.margin          : 'margin' num [1:4] 5.5pt 5.5pt 5.5pt 5.5pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ strip.background     : list()
-  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
- $ strip.placement      : chr "inside"
- $ strip.text           :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : chr "grey10"
-  ..$ size         : 'rel' num 0.8
-  ..$ hjust        : NULL
-  ..$ vjust        : NULL
-  ..$ angle        : NULL
-  ..$ lineheight   : NULL
-  ..$ margin       : 'margin' num [1:4] 4.4pt 4.4pt 4.4pt 4.4pt
-  .. ..- attr(*, "valid.unit")= int 8
-  .. ..- attr(*, "unit")= chr "pt"
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ strip.text.x         : NULL
- $ strip.text.y         :List of 11
-  ..$ family       : NULL
-  ..$ face         : NULL
-  ..$ colour       : NULL
-  ..$ size         : NULL
-  ..$ hjust        : NULL
-  ..$ vjust        : NULL
-  ..$ angle        : num -90
-  ..$ lineheight   : NULL
-  ..$ margin       : NULL
-  ..$ debug        : NULL
-  ..$ inherit.blank: logi TRUE
-  ..- attr(*, "class")= chr [1:2] "element_text" "element"
- $ strip.switch.pad.grid: 'unit' num 2.75pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- $ strip.switch.pad.wrap: 'unit' num 2.75pt
-  ..- attr(*, "valid.unit")= int 8
-  ..- attr(*, "unit")= chr "pt"
- - attr(*, "class")= chr [1:2] "theme" "gg"
- - attr(*, "complete")= logi TRUE
- - attr(*, "validate")= logi TRUE
-```
-
-```r
 g2
 ```
 
@@ -857,7 +493,411 @@ g2
 Warning: Removed 2603 rows containing non-finite values (stat_count).
 ```
 
-<img src="figure_rmd_0/facet-graph-1.png" width="900" />
+<img src="figure_rmd_0/bar-graph-1.png" width="900" />
+
+### Density
+
+```r
+# denisty of a measure in across schools
+g3 <- ds0 %>% 
+  ggplot2::ggplot(
+    aes(
+      x = SDQpro1
+      ,fill = school_state
+    )
+  ) +
+  geom_density() +
+  facet_wrap("school_name") +
+  theme_minimal()
+g3
+```
+
+```
+Warning: Removed 2603 rows containing non-finite values (stat_density).
+```
+
+<img src="figure_rmd_0/density-graph-1.png" width="900" />
+
+### Box-Plot
+
+```r
+# box plot of a variable and the treatment variable
+g4 <- ds0 %>% 
+  ggplot2::ggplot(
+    aes(
+      x     = Tx1
+      ,y    = SDQpro1
+      ,fill = Tx1
+    )
+  ) + 
+  geom_boxplot() +
+  coord_flip() +
+  theme_minimal() 
+g4
+```
+
+```
+Warning: Removed 2603 rows containing non-finite values (stat_boxplot).
+```
+
+<img src="figure_rmd_0/box-plot-graph-1.png" width="900" />
+
+### Poly
+
+```r
+# Freqpoly
+g5 <- ds0 %>% 
+  ggplot2::ggplot(
+    mapping = aes(
+      x = SDQpro1
+    )
+  ) +
+   geom_freqpoly(
+     mapping = aes(
+       color = Tx1
+     ) , bindwidth = 100
+   ) +
+  theme_minimal()
+```
+
+```
+Warning: Ignoring unknown parameters: bindwidth
+```
+
+```r
+g5
+```
+
+```
+Warning: Removed 2603 rows containing non-finite values (stat_bin).
+```
+
+<img src="figure_rmd_0/poly-graph-1.png" width="1100" />
+
+### Point
+
+```r
+g6 <- ds0 %>% 
+  ggplot2::ggplot(
+    mapping = aes(
+      x  = SDQpro1
+      ,y = SDQpro2
+    )
+  ) +
+  ggplot2::geom_point()+
+  ggplot2::geom_smooth()+
+  ggplot2::geom_jitter()+
+  theme_minimal()
+g6
+```
+
+```
+Warning: Removed 3617 rows containing non-finite values (stat_smooth).
+```
+
+```
+Warning: Removed 3617 rows containing missing values (geom_point).
+
+Warning: Removed 3617 rows containing missing values (geom_point).
+```
+
+<img src="figure_rmd_0/point-graph-1.png" width="900" />
+
+```r
+g6_2 <- ds0 %>% 
+  subset(!is.na(Tx1)) %>% 
+  ggplot2::ggplot(
+    aes(
+      x  = school_name
+      ,y = SDQpro1
+    )
+   ) +
+  geom_point(
+    alpha     = 0.3
+    ,color    = "tomato"
+    ,position = "jitter") +
+  geom_boxplot(alpha=0) + 
+  coord_flip() + 
+  facet_grid(. ~ Tx1) +
+  theme_minimal()
+g6_2
+```
+
+```
+Warning: Removed 957 rows containing non-finite values (stat_boxplot).
+```
+
+```
+Warning: Removed 957 rows containing missing values (geom_point).
+```
+
+<img src="figure_rmd_0/point-graph-2.png" width="900" />
+
+### Line
+
+```r
+g7 <- ds0 %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_smooth(
+    mapping = aes(
+      x  = SDQpro1
+      ,y = SDQpro2
+      ,color = Tx1
+    )
+  ) + 
+theme_minimal()
+g7
+```
+
+```
+Warning: Removed 3617 rows containing non-finite values (stat_smooth).
+```
+
+<img src="figure_rmd_0/line-graph-1.png" width="900" />
+
+```r
+g8 <- ds0 %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_smooth(
+    mapping = aes(
+      x  = SDQpro1
+      ,y = SDQpro2
+      ,color = Tx1
+    )
+  ) + 
+  facet_wrap("school_name") +
+  theme_minimal()
+g8
+```
+
+```
+Warning: Removed 3617 rows containing non-finite values (stat_smooth).
+```
+
+```
+Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : pseudoinverse used at 1
+```
+
+```
+Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : neighborhood radius 0.4
+```
+
+```
+Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric, : reciprocal condition number 4.9396e-17
+```
+
+```
+Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if (is.data.frame(newdata))
+as.matrix(model.frame(delete.response(terms(object)), : pseudoinverse used at 1
+```
+
+```
+Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if (is.data.frame(newdata))
+as.matrix(model.frame(delete.response(terms(object)), : neighborhood radius 0.4
+```
+
+```
+Warning in predLoess(object$y, object$x, newx = if (is.null(newdata)) object$x else if (is.data.frame(newdata))
+as.matrix(model.frame(delete.response(terms(object)), : reciprocal condition number 4.9396e-17
+```
+
+<img src="figure_rmd_0/line-graph-2.png" width="900" />
+
+### By Wave
+
+```r
+vars <- c("StudentID","school_name", "school_state", "Tx1")
+d9_long <- ds0 %>% 
+  dplyr::select_(.dots = c(vars, paste0("SDQpro",1:4))) %>%
+  tidyr::gather(
+    key    = "key"   # name of new variable to store the key
+    ,value = "value" # name of new variable to store the values
+    ,SDQpro1, SDQpro2, SDQpro3, SDQpro4 # selection of columns to gather
+  ) %>% 
+  dplyr::mutate(
+    prosocial  = value, # the variable that will store the value of SDQ
+    wave       = gsub(pattern = "SDQpro(\\d+)",replacement = "\\1", x = key)
+  ) %>% 
+  dplyr::select(-key, -value) %>% 
+  dplyr::arrange(StudentID)
+```
+
+```
+Warning: select_() is deprecated. 
+Please use select() instead
+
+The 'programming' vignette or the tidyeval book can help you
+to program with select() : https://tidyeval.tidyverse.org
+This warning is displayed once per session.
+```
+
+```r
+d9_long %>% print()
+```
+
+```
+# A tibble: 35,632 x 6
+   StudentID school_name school_state Tx1                    prosocial wave 
+       <dbl> <chr>       <chr>        <fct>                      <dbl> <chr>
+ 1 101101125 Cascade     WA           Intervention Group (1)       1.8 1    
+ 2 101101125 Cascade     WA           Intervention Group (1)       1.6 2    
+ 3 101101125 Cascade     WA           Intervention Group (1)       2   3    
+ 4 101101125 Cascade     WA           Intervention Group (1)       2   4    
+ 5 101101189 Cascade     WA           Intervention Group (1)       1   1    
+ 6 101101189 Cascade     WA           Intervention Group (1)       1.4 2    
+ 7 101101189 Cascade     WA           Intervention Group (1)      NA   3    
+ 8 101101189 Cascade     WA           Intervention Group (1)      NA   4    
+ 9 101101192 Cascade     WA           Intervention Group (1)       1.8 1    
+10 101101192 Cascade     WA           Intervention Group (1)       2   2    
+# … with 35,622 more rows
+```
+
+```r
+p <- d9_long %>%
+ggplot2::ggplot(
+  mapping = aes(
+    x      = wave
+    ,y     = prosocial
+    ,group = StudentID
+    ,color = Tx1
+  )
+) 
+
+p + geom_point() + geom_jitter()
+```
+
+```
+Warning: Removed 12462 rows containing missing values (geom_point).
+```
+
+```
+Warning: Removed 12462 rows containing missing values (geom_point).
+```
+
+<img src="figure_rmd_0/by-wave-graph-1.png" width="900" />
+
+```r
+p + geom_line() 
+```
+
+```
+Warning: Removed 11898 rows containing missing values (geom_path).
+```
+
+<img src="figure_rmd_0/by-wave-graph-2.png" width="900" />
+
+```r
+p + geom_line() + facet_grid(. ~ Tx1)
+```
+
+```
+Warning: Removed 11898 rows containing missing values (geom_path).
+```
+
+<img src="figure_rmd_0/by-wave-graph-3.png" width="900" />
+
+```r
+p + geom_line() + facet_wrap(~school_name)
+```
+
+```
+Warning: Removed 11898 rows containing missing values (geom_path).
+```
+
+<img src="figure_rmd_0/by-wave-graph-4.png" width="900" />
+
+### School
+
+```r
+d9_long_2 <- d9_long %>% 
+  group_by(school_name, wave) %>% 
+  mutate(
+    sm_prosocial = mean(x = prosocial, na.rm = TRUE)
+  )
+
+d9_long_2 %>% print()
+```
+
+```
+# A tibble: 35,632 x 7
+# Groups:   school_name, wave [240]
+   StudentID school_name school_state Tx1                    prosocial wave  sm_prosocial
+       <dbl> <chr>       <chr>        <fct>                      <dbl> <chr>        <dbl>
+ 1 101101125 Cascade     WA           Intervention Group (1)       1.8 1             1.22
+ 2 101101125 Cascade     WA           Intervention Group (1)       1.6 2             1.43
+ 3 101101125 Cascade     WA           Intervention Group (1)       2   3             1.44
+ 4 101101125 Cascade     WA           Intervention Group (1)       2   4             1.47
+ 5 101101189 Cascade     WA           Intervention Group (1)       1   1             1.22
+ 6 101101189 Cascade     WA           Intervention Group (1)       1.4 2             1.43
+ 7 101101189 Cascade     WA           Intervention Group (1)      NA   3             1.44
+ 8 101101189 Cascade     WA           Intervention Group (1)      NA   4             1.47
+ 9 101101192 Cascade     WA           Intervention Group (1)       1.8 1             1.22
+10 101101192 Cascade     WA           Intervention Group (1)       2   2             1.43
+# … with 35,622 more rows
+```
+
+```r
+s <- d9_long_2 %>%
+  ggplot2::ggplot(
+    mapping = aes(
+      x      = wave
+      ,y     = sm_prosocial
+      ,group = school_name
+      ,color = school_state
+    ) 
+  )
+
+s + ggplot2::geom_point(
+  #shape  = 19  # Use solid circles
+  shape  = 1   # Use hollow circles
+  ,alpha = 1/4 # 1/4 opacity
+) + 
+  ggplot2::geom_jitter()
+```
+
+<img src="figure_rmd_0/school-graph-1.png" width="900" />
+
+```r
+s + ggplot2::geom_line() 
+```
+
+<img src="figure_rmd_0/school-graph-2.png" width="900" />
+
+```r
+s + ggplot2::geom_line() + facet_wrap(~school_name)
+```
+
+<img src="figure_rmd_0/school-graph-3.png" width="900" />
+
+```r
+# similar to the geom_line above
+# s +
+#   ggplot2::geom_smooth() +
+#   facet_wrap("school_name") +
+#   theme_minimal()
+
+g15 <- d9_long %>% 
+  group_by(school_name, wave) %>% 
+  mutate(
+    sm_prosocial = mean(x = prosocial, na.rm = TRUE)
+  ) %>% 
+  subset(!is.na(Tx1)) %>% 
+  ggplot2::ggplot(
+    aes(
+     x = sm_prosocial
+    ,fill = Tx1
+    )
+  ) +
+  geom_density() +
+  facet_wrap("wave") +
+  theme_minimal()
+g15
+```
+
+<img src="figure_rmd_0/school-graph-4.png" width="900" />
+
+
+
 
 
 
