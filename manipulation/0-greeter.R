@@ -53,6 +53,27 @@ d_meta <- readr::read_csv("./data-unshared/raw/dead-meta.csv")
 d_meta
 
 # ---- tweak-data ----------------------------
+ds0 <- ds0 %>% 
+  dplyr::mutate(
+    school_id = as.character(SchoolID)
+  ) %>% 
+  dplyr::filter(!SchoolID == "Mark Twain Elementary in WA_duplicated_140") %>% 
+  dplyr::mutate(
+    school_id = ifelse(school_id == "Benson Hill Elementary in WA'",
+                       "Benson Hill Elementary in WA", school_id)
+  )
+
+regex = '(.+)( in )([A-Z]{2})( ?)'
+ds0 <- ds0 %>% 
+  dplyr::mutate(
+    school_id     = gsub(" Elementary ", " ", school_id)
+    ,school_name  = gsub(regex, "\\1", school_id)
+    ,school_state = gsub(regex, "\\3", school_id)
+  )
+
+unique(ds0$SchoolID)
+
+
 # define the relevant scope of vision needed for analytic goals
 variables_included <- d_meta %>% 
   dplyr::filter( include == TRUE) %>% 
@@ -68,6 +89,7 @@ ds1 <- ds0 %>%
 
 ds1 %>% dplyr::glimpse(60)
 
+
 # prepare for gathering
 have_waves <- d_meta %>% 
   dplyr::filter(!is.na(wave)) %>% 
@@ -76,16 +98,17 @@ have_waves <- d_meta %>%
   as.list() %>% unlist() %>% as.character()
 
 ds1_long <- ds1 %>%
-  dplyr::arrange(StudentID) %>% dplyr::slice(1:100) %>% 
+  # dplyr::arrange(StudentID) %>% dplyr::slice(1:100) %>%  # minimize for evaluation
   tidyr::gather("key", "value", have_waves) %>% 
-  dplyr::left_join(d_meta, by = c("key" = "name"))
+  dplyr::left_join(d_meta, by = c("key" = "name")) %>% 
+  dplyr::select(-include)
 
 # ---- define-utility-functions ---------------
 
 
 # ---- save-to-disk ----------------------------
 
-saveRDS(ds1, "./data-unshared/derived/0-dto.rds")
+saveRDS(ds1_long, "./data-unshared/derived/0-dto.rds")
 
 
 
