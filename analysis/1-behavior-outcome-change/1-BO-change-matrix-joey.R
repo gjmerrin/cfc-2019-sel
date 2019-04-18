@@ -46,7 +46,7 @@ ds0 %>%
 
 
 d1 <- ds0 %>% 
-  dplyr::select(StudentID, school_id, wave, construct, value, tx, StudentGender) %>% 
+  dplyr::select(StudentID, school_id, school_name, wave, construct, value, tx, StudentGender) %>% 
   dplyr::mutate(
     value = as.numeric(value)
   )
@@ -83,7 +83,6 @@ g1 <- d1 %>%
   # geom_smooth(aes(group = SchoolID), color = "blue", se = F)+
   # geom_smooth(aes(group = as.factor(tx)) )+
   main_theme 
-
 g1
 
 # g2 <- d1 %>% 
@@ -114,12 +113,31 @@ g3 <- d1 %>%
 g3
 
 g4 <- d1 %>% 
-  dplyr::filter(construct %in% c("Disruptive Behavior")) %>%
+  group_by(school_id) %>% 
+  dplyr::filter(construct %in% c("Reading Fluency")) %>%
   ggplot(aes(x = wave, y = value)) +
   geom_smooth(aes(group = school_id, color = tx), se = FALSE) +
+  facet_grid(. ~ tx)+
   main_theme
 g4
 
+
+
+g6 <- d1 %>% 
+  # dplyr::filter(construct %in% c("Empathy")) %>%
+  dplyr::filter(construct %in% c("Empathy")) %>%
+  # dplyr::filter(construct %in% c("Empathy", "Reading Fluency")) %>%
+  # dplyr::filter(StudentID %in% get_a_sample(d1,"StudentID", T)) %>%
+  ggplot(aes(x = wave, y = value)) +
+  # geom_point( shape  = 21, size = 3, fill = NA, alpha = alpha_value)+
+  geom_line(aes(group = StudentID), alpha = .10, color = "black")+
+  geom_smooth(aes(group = school_id, color = tx), se = F)+
+  # geom_smooth(aes(group = SchoolID), color = "blue", se = F)+
+  # geom_smooth(aes(group = as.factor(tx)) )+
+  facet_wrap(~school_name)+
+  ylim(0, 6) +
+  main_theme 
+g6
 
   
 # ---- basic-table --------------------------------------------------------------
