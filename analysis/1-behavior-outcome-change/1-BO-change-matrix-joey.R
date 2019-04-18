@@ -44,15 +44,11 @@ ds0 %>%
   dplyr::arrange(tx) %>% 
   print(n = nrow(.))
 
-
 d1 <- ds0 %>% 
   dplyr::select(StudentID, school_id, school_name, wave, construct, value, tx, StudentGender) %>% 
   dplyr::mutate(
     value = as.numeric(value)
   )
-
-
-
 
 get_a_sample <- function(d,varname,sample_size, show_all = FALSE){
   # varname = "offense_arrest_cd"
@@ -67,7 +63,8 @@ get_a_sample <- function(d,varname,sample_size, show_all = FALSE){
 } 
 # d_sample_1 <- d1 %>% get_a_sample(varname = "StudentID",sample_size =  100)
 
-
+# ---- graph-data ---------------------------------------------------------------
+options(warn=-1)
 set.seed(42)
 alpha_value <- .05
 sample_size <- 1000
@@ -121,9 +118,8 @@ g4 <- d1 %>%
   main_theme
 g4
 
-
-
-g6 <- d1 %>% 
+# ---- person-by-school -------------------------------------------------------
+g5 <- d1 %>% 
   # dplyr::filter(construct %in% c("Empathy")) %>%
   dplyr::filter(construct %in% c("Empathy")) %>%
   # dplyr::filter(construct %in% c("Empathy", "Reading Fluency")) %>%
@@ -135,18 +131,18 @@ g6 <- d1 %>%
   # geom_smooth(aes(group = SchoolID), color = "blue", se = F)+
   # geom_smooth(aes(group = as.factor(tx)) )+
   facet_wrap(~school_name)+
-  ylim(0, 6) +
+  ylim(0, 4) +
   main_theme 
-g6
+g5
 
-  
+# options(warn=0)
 # ---- basic-table --------------------------------------------------------------
 
 
 # ---- basic-graph --------------------------------------------------------------
 
 # ---- publish ---------------------------------------
-path_report_1 <- "./analysis/1-behavior-outcome-change/1-BO-change-matrix-andriy.Rmd"
+path_report_1 <- "./analysis/1-behavior-outcome-change/1-BO-change-matrix-joey.Rmd"
 path_report_2 <- "./reports/*/report_2.Rmd"
 # allReports <- c(path_report_1,path_report_2)
 allReports <- c(path_report_1)
