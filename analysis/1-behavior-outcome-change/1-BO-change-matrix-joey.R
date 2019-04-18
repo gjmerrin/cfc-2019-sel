@@ -46,7 +46,7 @@ ds0 %>%
 
 
 d1 <- ds0 %>% 
-  dplyr::select(StudentID, school_id, wave, construct, value, tx) %>% 
+  dplyr::select(StudentID, school_id, wave, construct, value, tx, StudentGender) %>% 
   dplyr::mutate(
     value = as.numeric(value)
   )
@@ -86,17 +86,41 @@ g1 <- d1 %>%
 
 g1
 
+# g2 <- d1 %>% 
+#   group_by(school_id) %>% 
+#   dplyr::filter(construct %in% c("Reading Fluency")) %>%
+#   dplyr::filter(StudentID %in% get_a_sample(d1,"StudentID",sample_size, F)) %>%
+#   ggplot(aes(x = wave, y = value))+
+#   geom_smooth(aes(group = tx))+
+#   main_theme
+# g2
+
 g2 <- d1 %>% 
+  group_by(school_id) %>% 
   dplyr::filter(construct %in% c("Reading Fluency")) %>%
-  dplyr::filter(StudentID %in% get_a_sample(d1,"StudentID",sample_size, F)) %>%
-  ggplot(aes(x = wave, y = value))+
-  geom_smooth(aes(group = tx))+
+  ggplot(aes(x = wave, y = value)) +
+  geom_smooth(aes(group = school_id, color = tx), se = FALSE) +
   main_theme
 g2
-  
-  
-  
-  
+
+g3 <- d1 %>% 
+  group_by(school_id) %>% 
+  subset(!is.na(StudentGender)) %>%
+  dplyr::filter(construct %in% c("Reading Fluency")) %>%
+  ggplot(aes(x = wave, y = value)) +
+  geom_smooth(aes(group = school_id, color = tx), se = FALSE) +
+  facet_grid(. ~ StudentGender)+
+  main_theme
+g3
+
+g4 <- d1 %>% 
+  dplyr::filter(construct %in% c("Disruptive Behavior")) %>%
+  ggplot(aes(x = wave, y = value)) +
+  geom_smooth(aes(group = school_id, color = tx), se = FALSE) +
+  main_theme
+g4
+
+
   
 # ---- basic-table --------------------------------------------------------------
 
